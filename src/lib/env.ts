@@ -13,7 +13,7 @@ export const schema = {
         'production' as const,
         'development' as const,
     ]
-} as const
+}
 
 export let env: Env
 

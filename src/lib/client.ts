@@ -16,6 +16,5 @@ export function login () {
     log.info('Connected to Discord')
 
     log.info(`Loaded commands`, await loadCommands(client))
-    log.info(client.guilds)
   })
 }
