@@ -1,29 +1,17 @@
-
+import { ApplicationOptions  } from "discord-slash-commands-client"
 
 /*
- * All but Command are temporary structures,
- * untill slash commands lands on d.js.
+ * type ApplicationCommandOptionType =
+ * "SUB_COMMAND": 1 |
+ * "SUB_COMMAND_GROUP": 2 |
+ * "STRING": 3 |
+ * "INTEGER": 4 |
+ * "BOOLEAN": 5 |
+ * "USER": 6 |
+ * "CHANNEL": 7 |
+ * "ROLE": 8
  */
 
-/* https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoption */
-interface ApplicationCommandOption {
-  type: ApplicationCommandOptionType,
-  name: String,
-  description: String,
-  required?: Boolean
-}
-
-/* https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptiontype */
-type ApplicationCommandOptionType = 3 | 6
-
-export enum CommandTypes {
-  USER = 6,
-  STRING = 3
-}
-
-export interface Command {
-  name: String
-  description: String,
-  options?: ApplicationCommandOption[]
+export interface Command extends ApplicationOptions {
   execute (): Promise<any>
 }

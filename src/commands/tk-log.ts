@@ -1,4 +1,4 @@
-import { Command, CommandTypes } from '../structures/command'
+import { Command } from '../structures/command'
 
 const tkLog: Command = {
   name: 'tk-log',
@@ -7,7 +7,7 @@ const tkLog: Command = {
     {
       name: 'Killer',
       description: 'Who killed someone?',
-      type: CommandTypes.USER,
+      type: 6,
       required: true
     }
   ],

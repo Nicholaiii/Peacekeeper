@@ -16,10 +16,6 @@ export function login () {
     log.info('Connected to Discord')
 
     log.info(`Loaded commands`, await loadCommands(client))
-  })
-
-  // @ts-ignore
-  client.ws.on('INTERACTION_CREATE', async interaction => {
-    console.log(interaction)
+    log.info(client.guilds)
   })
 }
