@@ -1,6 +1,6 @@
 import { Client, TextChannel } from 'discord.js'
-import interactions, { ApplicationCommandOption, ApplicationCommandOptionChoice, ApplicationOptions } from 'discord-slash-commands-client'
-import { omit, pick, prop } from 'ramda'
+import interactions, { ApplicationCommandOptionChoice, ApplicationOptions } from 'discord-slash-commands-client'
+import { omit } from 'ramda'
 
 import { Command } from '../structures/command'
 import { Interaction } from '../structures/interaction'
@@ -13,8 +13,6 @@ import tkLog from '../commands/tk-log'
 import tkLast from '../commands/tk-last'
 import tkTop from '../commands/tk-top'
 import tkHelp from '../commands/tk-help'
-
-
 
 const commands: Record<string, Command> = {
   [tkLog.name]: tkLog,
@@ -39,6 +37,7 @@ export async function loadCommands (
    * Don't try this at home
    */
   client.interactions = new interactions.Client(env.DISCORD_TOKEN, env.DISCORD_ID)
+
 
   await Object.values(commands).map(command =>
     client.interactions.createCommand(pickData(command), env.DEV_GUILD)

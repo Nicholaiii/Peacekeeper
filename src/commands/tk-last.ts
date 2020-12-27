@@ -1,8 +1,8 @@
-import { Interaction } from "../structures/interaction"
-import { Command } from "../structures/command"
-import { Choices } from "../lib/commands"
+import { Interaction } from '../structures/interaction'
+import { Command } from '../structures/command'
+import { Choices } from '../lib/commands'
 import { TeamkillModel } from '../models/teamkill'
-import { Client, MessageEmbed } from "discord.js"
+import { Client, MessageEmbed } from 'discord.js'
 
 class tkLast extends Command {
   name = 'tk-last'

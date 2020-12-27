@@ -1,6 +1,6 @@
-import { Command } from "../structures/command"
-import { Client, MessageEmbed } from "discord.js"
-import { env } from "../lib/env"
+import { Command } from '../structures/command'
+import { Client, MessageEmbed } from 'discord.js'
+import { env } from '../lib/env'
 
 class tkHelp extends Command {
   name = 'tk-help'

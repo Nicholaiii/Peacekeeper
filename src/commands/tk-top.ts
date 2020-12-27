@@ -1,9 +1,9 @@
-import { Interaction } from "../structures/interaction"
-import { Command } from "../structures/command"
-import { Choices } from "../lib/commands"
+import { Interaction } from '../structures/interaction'
+import { Command } from '../structures/command'
+import { Choices } from '../lib/commands'
 import { TeamkillModel } from '../models/teamkill'
-import { Client, MessageEmbed } from "discord.js"
-import { prop } from "ramda"
+import { Client, MessageEmbed } from 'discord.js'
+import { prop } from 'ramda'
 
 class tkTop extends Command {
   name = 'tk-top'
