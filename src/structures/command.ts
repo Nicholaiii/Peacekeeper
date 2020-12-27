@@ -1,4 +1,5 @@
-import { ApplicationCommandOptionChoice, ApplicationOptions  } from 'discord-slash-commands-client'
+import { ApplicationOptions } from 'discord-slash-commands-client'
+import { Client } from 'discord.js'
 import { Choices } from '../lib/commands'
 import { Interaction } from './interaction'
 
@@ -17,5 +18,10 @@ import { Interaction } from './interaction'
 export abstract class Command implements ApplicationOptions {
   name: string
   description: string
-  public abstract execute (choices: Choices, member: Interaction['member']): Promise<any>
+
+  public abstract execute (
+    choices: Choices,
+    interaction: Interaction,
+    client: Client
+  ): Promise<any>
 }

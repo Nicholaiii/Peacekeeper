@@ -6,6 +6,7 @@ export interface Interaction {
   member: {
     user: {
       id: string
+      username: string
     }
   }
   data: {
@@ -13,4 +14,5 @@ export interface Interaction {
     name: string
   }
   channel_id: string
+  guild_id: string
 }

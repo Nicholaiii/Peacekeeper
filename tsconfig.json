@@ -2,13 +2,17 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "target": "es6",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "skipLibCheck": true,
     "outDir": "dist",
     "baseUrl": ".",
+    "rootDir": "src",
     "lib": ["ESNext"],
     "paths": {
     "*": [

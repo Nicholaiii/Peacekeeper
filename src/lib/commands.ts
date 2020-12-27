@@ -7,9 +7,13 @@ import { env } from './env'
 
 /* Commands */
 import tkLog from '../commands/tk-log'
+import tkLast from '../commands/tk-last'
+import tkTop from '../commands/tk-top'
 
 const commands: Record<string, Command> = {
-  [tkLog.name]: tkLog
+  [tkLog.name]: tkLog,
+  [tkLast.name]: tkLast,
+  [tkTop.name]: tkTop
 }
 
 interface InteractionClient extends Client {
@@ -48,8 +52,9 @@ export async function loadCommands (
   client.ws.on('INTERACTION_CREATE', async (interaction: Interaction) => {
     console.dir(interaction, { depth: 5 })
     const response = await commands[interaction.data.name].execute(
-      interaction.data.options.reduce(reduceChoices, new Map<string, string>()),
-      interaction.member
+      reduceChoices(interaction.data.options),
+      interaction,
+      client
     )
 
     const channel = await client.channels.fetch(interaction.channel_id)
@@ -60,7 +65,11 @@ export async function loadCommands (
 }
 
 export type Choices = Map<string, string>
-function reduceChoices (choices: Choices, choice: ApplicationCommandOptionChoice): Choices {
+function reduceToMap (choices: Choices, choice: ApplicationCommandOptionChoice): Choices {
   choices.set(choice.name, choice.value)
   return choices
+}
+
+function reduceChoices(options: ApplicationCommandOptionChoice[]) {
+  return options ? options.reduce(reduceToMap, new Map<string, string>()) : null
 }
