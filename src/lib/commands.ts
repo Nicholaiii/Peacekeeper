@@ -49,10 +49,11 @@ export async function loadCommands (
 
   /* Add commands when bot joins a new server */
   client.on('guildCreate', setupGuild)
+  client.on('guildCreate', (guild: Guild) => log.info(`Joined server: ${guild.name}`))
 
   // @ts-ignore This is seriously just a hack. Get rid of it eventually.
   client.ws.on('INTERACTION_CREATE', async (interaction: Interaction) => {
-    console.log(interaction.member.user.username, 'calls', interaction.data.name, interaction.data.options ?? null)
+    console.log(interaction.member.user.username, 'calls', interaction.data.name, interaction.data.options ?? '')
     const response = await commands.get(interaction.data.name)?.execute(
       reduceChoices(interaction.data.options),
       interaction,
