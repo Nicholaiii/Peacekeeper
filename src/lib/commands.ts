@@ -35,7 +35,7 @@ function createCommands (guild: string, client: InteractionClient) {
 
 export async function loadCommands (
   client: InteractionClient
-): Promise<String[]> {
+): Promise<String> {
   /*
    * Temporary hack untill d.js fixes slash commands;
    * Don't try this at home
@@ -64,7 +64,7 @@ export async function loadCommands (
     ;(channel as TextChannel).send(response ?? `I don't know this command, or something wen't wrong :(`)
   })
 
-  return [...commands.keys()]
+  return `[ ${[...commands.keys()].join(', ')} ] on ${client.guilds.cache.size} server(s)`
 }
 
 export type Choices = Map<string, string>
