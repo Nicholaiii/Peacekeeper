@@ -1,4 +1,4 @@
-import { Client, TextChannel } from 'discord.js'
+import { Client, Guild, TextChannel } from 'discord.js'
 import interactions, { ApplicationCommandOptionChoice, ApplicationOptions } from 'discord-slash-commands-client'
 import { omit } from 'ramda'
 
@@ -14,12 +14,12 @@ import tkLast from '../commands/tk-last'
 import tkTop from '../commands/tk-top'
 import tkHelp from '../commands/tk-help'
 
-const commands: Record<string, Command> = {
-  [tkLog.name]: tkLog,
-  [tkLast.name]: tkLast,
-  [tkTop.name]: tkTop,
-  [tkHelp.name]: tkHelp
-}
+const commands: Map<Command['name'], Command> = new Map([
+  tkLog,
+  tkLast,
+  tkTop,
+  tkHelp
+].map(command => [command.name, command]))
 
 interface InteractionClient extends Client {
   interactions?: interactions.Client
@@ -28,6 +28,10 @@ interface InteractionClient extends Client {
 const pickData: (
   command: Command
 ) => ApplicationOptions = omit(['execute'])
+
+function createCommands (guild: string, client: InteractionClient) {
+  commands.forEach(command => client.interactions?.createCommand(pickData(command), guild))
+}
 
 export async function loadCommands (
   client: InteractionClient
@@ -38,36 +42,28 @@ export async function loadCommands (
    */
   client.interactions = new interactions.Client(env.DISCORD_TOKEN, env.DISCORD_ID)
 
+  const setupGuild = (guild: Guild) => createCommands(guild.id, client)
 
-  await Object.values(commands).map(command =>
-    client.interactions.createCommand(pickData(command), env.DEV_GUILD)
-  )
+  /* Setup commands on all servers on join; ruh-roh, potential ratelimit? */
+  client.guilds.cache.forEach(setupGuild)
 
-  try {
-    /* getCommands will fail until this pr lands;
-     * https://github.com/MatteZ02/discord-interactions/pull/5
-     * Monkeypatch your node_modules/discord-slash-commands-clients
-     * with those changes
-     */
-  } catch (e) {
-    /* If you reach here, you forgot to patch */
-    console.error(e)
-  }
+  /* Add commands when bot joins a new server */
+  client.on('guildCreate', setupGuild)
 
-  // @ts-ignore
+  // @ts-ignore This is seriously just a hack. Get rid of it eventually.
   client.ws.on('INTERACTION_CREATE', async (interaction: Interaction) => {
-    console.dir(interaction, { depth: 5 })
-    const response = await commands[interaction.data.name].execute(
+    console.log(interaction.member.user.username, 'calls', interaction.data.name, interaction.data.options ?? null)
+    const response = await commands.get(interaction.data.name)?.execute(
       reduceChoices(interaction.data.options),
       interaction,
       client
     )
 
     const channel = await client.channels.fetch(interaction.channel_id)
-    ;(channel as TextChannel).send(response)
+    ;(channel as TextChannel).send(response ?? `I don't know this command, or something wen't wrong :(`)
   })
 
-  return Object.keys(commands)
+  return [...commands.keys()]
 }
 
 export type Choices = Map<string, string>
