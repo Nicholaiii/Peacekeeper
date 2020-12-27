@@ -2,7 +2,7 @@
 FROM node:15-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 ENV NODE_ENV=production
 RUN npm run build
@@ -12,9 +12,9 @@ FROM node:15-alpine as production-stage
 WORKDIR /app
 COPY --from=build-stage /app/dist /app
 COPY package*.json ./
-RUN npm install --only=production
-
 ENV NODE_ENV=production
+RUN npm ci
+
 CMD [ "npm", "start" ]
 
 LABEL authors="Nicholai Nissen"
