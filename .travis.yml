@@ -27,3 +27,4 @@ deploy:
   script: docker push "${IMAGE_NAME}:latest" && docker push "${IMAGE_NAME}:${TRAVIS_COMMIT}"
   on:
     branch: main
+    tags: true

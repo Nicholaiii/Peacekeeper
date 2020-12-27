@@ -1,6 +1,6 @@
 {
   "name": "peacekeeper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Discord bot to track TK's in Tarkov",
   "main": "index.js",
   "scripts": {

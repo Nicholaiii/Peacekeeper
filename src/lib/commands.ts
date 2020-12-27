@@ -1,19 +1,26 @@
 import { Client, TextChannel } from 'discord.js'
 import interactions, { ApplicationCommandOption, ApplicationCommandOptionChoice, ApplicationOptions } from 'discord-slash-commands-client'
 import { omit, pick, prop } from 'ramda'
+
 import { Command } from '../structures/command'
 import { Interaction } from '../structures/interaction'
+
 import { env } from './env'
+import { log } from './log'
 
 /* Commands */
 import tkLog from '../commands/tk-log'
 import tkLast from '../commands/tk-last'
 import tkTop from '../commands/tk-top'
+import tkHelp from '../commands/tk-help'
+
+
 
 const commands: Record<string, Command> = {
   [tkLog.name]: tkLog,
   [tkLast.name]: tkLast,
-  [tkTop.name]: tkTop
+  [tkTop.name]: tkTop,
+  [tkHelp.name]: tkHelp
 }
 
 interface InteractionClient extends Client {
