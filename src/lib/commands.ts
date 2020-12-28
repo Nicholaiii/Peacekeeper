@@ -51,9 +51,19 @@ export async function loadCommands (
   client.on('guildCreate', async (guild: Guild) =>  {
     log.info(`Joined server: ${guild.name}`)
     setupGuild(guild)
-    const channel = guild.channels.cache.find(c => c.name === 'general') as TextChannel
+    const greeting = await tkHelp.execute()
+    try {
+      guild.systemChannel.send(greeting)
+    } catch (error) {
+      try {
+        (guild.channels.cache.find(c => c.name === 'general') as TextChannel).send(greeting)
+      } catch (error2) {
+        console.error('Could not greet')
+        console.error(error)
+        console.error(error2)
+      }
+    }
 
-    channel?.send(await tkHelp.execute())
   })
   // @ts-ignore This is seriously just a hack. Get rid of it eventually.
   client.ws.on('INTERACTION_CREATE', async (interaction: Interaction) => {
