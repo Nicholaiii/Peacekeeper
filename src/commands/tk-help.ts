@@ -6,7 +6,7 @@ class tkHelp extends Command {
   name = 'tk-help'
   description = 'Show most recent TKs'
 
-  async execute (_: any, __: any, client: Client) {
+  async execute () {
     const embed = new MessageEmbed()
 
     embed.setColor('BLUE')
