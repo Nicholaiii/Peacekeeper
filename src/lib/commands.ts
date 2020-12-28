@@ -53,7 +53,7 @@ export async function loadCommands (
     setupGuild(guild)
     const channel = guild.channels.cache.find(c => c.name === 'general') as TextChannel
 
-    channel.send(await tkHelp.execute())
+    channel?.send(await tkHelp.execute())
   })
   // @ts-ignore This is seriously just a hack. Get rid of it eventually.
   client.ws.on('INTERACTION_CREATE', async (interaction: Interaction) => {
