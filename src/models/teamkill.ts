@@ -40,7 +40,7 @@ class Teamkill extends TimeStamps {
     return this.aggregate([
       { $match: { guild_id } },
       { $group: { _id: '$killer', count: { $sum: 1 } } },
-      { $sort: { cound: -1 } },
+      { $sort: { count: -1 } },
       { $limit: 10 }
     ]).exec()
   }
