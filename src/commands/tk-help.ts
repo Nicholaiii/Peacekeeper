@@ -18,8 +18,16 @@ class tkHelp extends Command {
 
     embed.setDescription('Teamkills? Not in my Tarkov!')
 
-    embed.addField('Getting started', `Type /tk to start using the bots commands`)
-    embed.addField('Tips', 'Hit [tab] to finish a field and go to next field, or you can just click the field you want')
+    embed.addFields([{
+      name: 'Getting started',
+      value: 'Type /tk to start using the bots commands'
+    }, {
+      name: 'Tips',
+      value: 'Hit [tab] to finish a field and go to next field, or you can just click the field you want'
+    }, {
+      name: 'Help?',
+      value: 'Click the GitHub link and open an issue if you encounter any issues!'
+    }])
 
     embed.setThumbnail('https://imgur.com/PLKg7Jf.png')
     embed.setFooter(`Made by nicholai#1312`)
